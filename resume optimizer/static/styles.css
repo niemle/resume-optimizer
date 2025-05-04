@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Optimizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Optimizer</h1>
+
+        <div class="form-section">
+            <form action="{{ url_for('optimize_resume') }}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="resume">Upload Resume (PDF):</label>
+                    <input type="file" name="resume" id="resume" accept=".pdf" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="job_posting">Job Posting:</label>
+                    <textarea name="job_posting" id="job_posting" rows="15" cols="60" placeholder="Paste the job description here..." required></textarea>
+                </div>
+
+                <button type="submit">Optimize Resume</button>
+            </form>
+        </div>
+
+        {% if optimized_resume %}
+            <div class="output-section">
+                <h2>Optimized Resume Suggestion:</h2>
+                <pre class="optimized-output">{{ optimized_resume }}</pre> {# Use pre to respect line breaks from model #}
+            </div>
+        {% endif %}
+
+        {# You might want to add a section for errors if any occur outside of optimized_resume #}
+        {# For example, if you pass an 'error_message' variable from Flask #}
+        {% if error_message %}
+             <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+
+    </div>
+</body>
+</html>
